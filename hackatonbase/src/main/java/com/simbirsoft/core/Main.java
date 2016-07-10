@@ -23,19 +23,24 @@ public class Main {
         while (true) {
             if (Config.isAutoRegimeOn) {
                 try {
-                    java.lang.Thread.sleep(4000);
                     System.out.print(Config.isAutoRegimeOn);
                     sc.getLuminance();
                     sc.getRoomTemperature();
 
-                    state = Helper.controlLights(DataCollector.sensorValues.get("ROOM_TEMPERATURE"));
+                    state = Helper.controlAirCondition(DataCollector.sensorValues.get("ROOM_TEMPERATURE"));
                     dc.setConditioner(state);
+                    state = Helper.controlHeater(DataCollector.sensorValues.get("ROOM_TEMPERATURE"));
                     dc.setHeater(state);
 
-                    state = Helper.controlLights(DataCollector.sensorValues.get("LUMINANCE"));
+                    state = Helper.controlBlinds(DataCollector.sensorValues.get("LUMINANCE"));
                     dc.setBlinds(state);
+                    state = Helper.controlLights(DataCollector.sensorValues.get("LUMINANCE"));
                     dc.setLight(state);
-                } catch (InterruptedException e) {
+
+                    java.lang.Thread.sleep(10000);
+                }
+                catch (InterruptedException e) {
+
                 }
             }
         }

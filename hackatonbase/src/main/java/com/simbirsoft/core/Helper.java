@@ -1,5 +1,6 @@
 package com.simbirsoft.core;
 
+import com.simbirsoft.controllers.DeviceController;
 import com.simbirsoft.entity.Sensor;
 
 import java.util.HashMap;
@@ -25,6 +26,47 @@ public class Helper {
             sensorDict.put(type, sensor);
         }
         return sensorDict;
+    }
+
+    public static String getControlPage(DeviceController dc) {
+        StringBuilder s = new StringBuilder();
+        s.append("<html> <head> <title>Панель управления</title> <meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\"> </head> <body> <h3>Панель управления</h3> <ul>");
+
+        if (!Config.isAutoRegimeOn) {
+            if (dc.getDeviceStatus("CONDITIONER").equals("\"ON\""))
+                s.append("<li><a target=\"_self\" href=\"http://192.168.30.145:8080/api/conditioner?state=OFF\">Выключить кондиционер</a></li>");
+            else
+                s.append("<li><a target=\"_self\" href=\"http://192.168.30.145:8080/api/conditioner?state=ON\">Включить кондиционер</a></li>");
+
+            if (dc.getDeviceStatus("HEATER").equals("\"ON\""))
+                s.append("<li><a target=\"_self\" href=\"http://192.168.30.145:8080/api/heater?state=OFF\">Выключить обогреватель</a></li>");
+            else
+                s.append("<li><a target=\"_self\" href=\"http://192.168.30.145:8080/api/heater?state=ON\">Включить обогреватель</a></li>");
+
+            if (dc.getDeviceStatus("LIGHT").equals("\"ON\""))
+                s.append("<li><a target=\"_self\" href=\"http://192.168.30.145:8080/api/light?state=OFF\">Выключить свет</a></li>");
+            else
+                s.append("<li><a target=\"_self\" href=\"http://192.168.30.145:8080/api/light?state=ON\">Включить свет</a></li>");
+
+            if (dc.getDeviceStatus("BLINDS").equals("\"ON\""))
+                s.append("<li><a target=\"_self\" href=\"http://192.168.30.145:8080/api/blinds?state=OFF\">Открыть жалюзи</a></li>");
+            else
+                s.append("<li><a target=\"_self\" href=\"http://192.168.30.145:8080/api/blinds?state=ON\">Закрыть жалюзи</a></li>");
+
+            s.append("<li><a target=\"_self\" href=\"http://192.168.30.145:8080/api/autoRegime?state=ON\">Включить автоматический режим</a></li>");
+        }
+        else
+            s.append("<li><a target=\"_self\" href=\"http://192.168.30.145:8080/api/autoRegime?state=OFF\">Выключить автоматический режим</a></li>");
+
+        s.append("<li><a target=\"_self\" href=\"http://192.168.30.145:8080/api/all?turnOff=YES\">Выключить все</a></li>");
+        s.append("</ul>");
+
+        s.append("<h3>Особые ситуации</h3>");
+        s.append("<ul><li><a target=\"_self\" href=\"http://192.168.30.145:8080/api/burglary\">Вызвать полицию и напугать вора</a></li></ul>");
+
+        s.append("</body> </html>");
+
+        return s.toString();
     }
 
     public static String controlHeater(String roomTemperature) {
@@ -62,5 +104,4 @@ public class Helper {
         else
             return "OFF";
     }
-
 }

@@ -4,17 +4,16 @@
 		<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 	</head>
 	<body>
-		<h3>Датчики</h3>
-		<ul>
-			<li><a target="_blank" href="http://localhost:8080/sensor/getRoomTemperature">Получить температуру</a></li>
-			<li><a target="_blank" href="http://localhost:8080/sensor/getLuminance">Получить освещенность</a></li>
-		</ul>
 		<h3>Устройства</h3>
 		<ul>
-			<li><a target="_blank" href="http://localhost:8080/devices/conditioner">Управление кондиционером</a></li>
-			<li><a target="_blank" href="http://localhost:8080/devices/heater">Управление обогревателем</a></li>
-			<li><a target="_blank" href="http://localhost:8080/devices/blinds">Управление жалюзи</a></li>
-			<li><a target="_blank" href="http://localhost:8080/devices/light">Управление светом</a></li>
+			<li><a target="_self" href="http://192.168.30.145:8080/api/conditioner?state=ON">Включить кондиционер</a></li>
+			<li><a target="_self" href="http://192.168.30.145:8080/api/conditioner?state=OFF">Выключить кондиционер</a></li>
+			<li><a target="_self" href="http://192.168.30.145:8080/api/heater?state=ON">Включить обогреватель</a></li>
+			<li><a target="_self" href="http://192.168.30.145:8080/api/heater?state=OFF">Выключить обогревательs</a></li>
+			<li><a target="_self" href="http://192.168.30.145:8080/api/blinds?state=ON">Включить жалюзи</a></li>
+			<li><a target="_self" href="http://192.168.30.145:8080/api/blinds?state=OFF">Выключить жалюзи</a></li>
+			<li><a target="_self" href="http://192.168.30.145:8080/api/light?state=ON">Включить свет</a></li>
+			<li><a target="_self" href="http://192.168.30.145:8080/api/light?state=OFF">Выключить свет</a></li>
 		</ul>
 	</body>
 </html>

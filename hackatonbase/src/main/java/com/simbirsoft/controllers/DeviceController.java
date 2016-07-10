@@ -60,4 +60,13 @@ public class DeviceController {
                 .toUri();
         new RestTemplate().put(uri, null);
     }
+
+    @RequestMapping(value = "/getDeviceStatus", method = RequestMethod.GET)
+    public String getDeviceStatus(String deviceName) {
+        URI uri = UriComponentsBuilder.fromHttpUrl(baseUrl)
+                .path("devices/" + deviceName)
+                .build()
+                .toUri();
+        return new RestTemplate().getForObject(uri, String.class);
+    }
 }

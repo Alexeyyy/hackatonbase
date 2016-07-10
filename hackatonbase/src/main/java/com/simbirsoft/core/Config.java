@@ -7,4 +7,5 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan("com.simbirsoft.controllers, com.simbirsoft.services")
 public class Config {
     public static boolean isAutoRegimeOn = false;
+
 }
