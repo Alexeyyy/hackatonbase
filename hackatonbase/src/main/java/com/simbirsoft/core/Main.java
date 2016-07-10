@@ -6,30 +6,38 @@ import com.simbirsoft.controllers.SensorController;
 import org.apache.tomcat.jni.Thread;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 
 @SpringBootApplication
 public class Main {
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
-        autoRequest();
+        autoRegime();
     }
 
-    public static void autoRequest() {
+    public static void autoRegime() {
         SensorController sc = new SensorController();
         DeviceController dc = new DeviceController();
+        String state;
 
         while (true) {
-            try {
-                java.lang.Thread.sleep(4000);
-                sc.getLuminance();
-                sc.getRoomTemperature();
+            if (Config.isAutoRegimeOn) {
+                try {
+                    java.lang.Thread.sleep(4000);
+                    System.out.print(Config.isAutoRegimeOn);
+                    sc.getLuminance();
+                    sc.getRoomTemperature();
 
-                dc.setBlinds();
-                dc.setConditioner();
-                dc.setHeater();
-                dc.setLight();
+                    state = Helper.controlLights(DataCollector.sensorValues.get("ROOM_TEMPERATURE"));
+                    dc.setConditioner(state);
+                    dc.setHeater(state);
+
+                    state = Helper.controlLights(DataCollector.sensorValues.get("LUMINANCE"));
+                    dc.setBlinds(state);
+                    dc.setLight(state);
+                } catch (InterruptedException e) {
+                }
             }
-            catch (InterruptedException e) { }
         }
     }
 }

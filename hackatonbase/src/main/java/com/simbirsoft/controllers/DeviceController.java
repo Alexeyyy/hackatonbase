@@ -18,20 +18,18 @@ public class DeviceController {
     private static final String microserviceId = "de7684649e49c31023e33974995e81f2";
 
     @RequestMapping(value = "/conditioner", method = RequestMethod.GET)
-    public void setConditioner() {
-        String state = Helper.controlAirCondition(DataCollector.sensorValues.get("ROOM_TEMPERATURE"));
+    public void setConditioner(@RequestParam ("state") String state) {
         URI uri = UriComponentsBuilder.fromHttpUrl(baseUrl)
                 .path("devices/CONDITIONER")
                 .queryParam("microserviceId", microserviceId)
-                .queryParam("state",state)
+                .queryParam("state", state)
                 .build()
                 .toUri();
         new RestTemplate().put(uri, null);
     }
 
     @RequestMapping(value = "/heater", method = RequestMethod.GET)
-    public void setHeater() {
-        String state = Helper.controlHeater(DataCollector.sensorValues.get("ROOM_TEMPERATURE"));
+    public void setHeater(@RequestParam("state") String state) {
         URI uri = UriComponentsBuilder.fromHttpUrl(baseUrl)
                 .path("devices/HEATER")
                 .queryParam("microserviceId", microserviceId)
@@ -42,8 +40,7 @@ public class DeviceController {
     }
 
     @RequestMapping(value = "/light", method = RequestMethod.GET)
-    public void setLight() {
-        String state = Helper.controlLights(DataCollector.sensorValues.get("LUMINANCE"));
+    public void setLight(@RequestParam("state") String state) {
         URI uri = UriComponentsBuilder.fromHttpUrl(baseUrl)
                 .path("devices/LIGHT")
                 .queryParam("microserviceId", microserviceId)
@@ -54,8 +51,7 @@ public class DeviceController {
     }
 
     @RequestMapping(value = "/blinds", method = RequestMethod.GET)
-    public void setBlinds() {
-        String state = Helper.controlBlinds(DataCollector.sensorValues.get("LUMINANCE"));
+    public void setBlinds(@RequestParam("state") String state) {
         URI uri = UriComponentsBuilder.fromHttpUrl(baseUrl)
                 .path("devices/BLINDS")
                 .queryParam("microserviceId", microserviceId)
